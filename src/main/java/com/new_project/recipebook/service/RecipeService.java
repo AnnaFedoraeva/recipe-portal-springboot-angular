@@ -8,14 +8,14 @@ import java.util.List;
 public interface RecipeService {
 
     public Recipe createRecipe (Recipe recipe, User user);
-    public Recipe findRecipeById(Long id);
+    public Recipe findRecipeById(Long id) throws Exception;
 
-    public void deleteRecipe(Long id);
+    public void deleteRecipe(Long id) throws Exception;
 
-    public Recipe updateRecipe (Recipe recipe, Long Id);
+    public Recipe updateRecipe (Recipe recipe, Long Id) throws Exception;
 
-    public List <Recipe> findAllRecipe();
+    public List <Recipe> findAllRecipes();
 
-    public Recipe likeRecipe (Long recipeId, User user);
+    public Recipe likeRecipe (Long recipeId, User user) throws Exception;
 
 }

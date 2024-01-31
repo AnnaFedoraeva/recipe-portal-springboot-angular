@@ -21,7 +21,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User with id: " + id + ", " + "name: " + fullName + ", " + " email: " + email;
+        return '\n'  + "User with id: " + id  +
+                '\n'  + "name: " + fullName +
+                + '\n'  + " email: " + email;
     }
 
 }

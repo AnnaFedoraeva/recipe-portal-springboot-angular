@@ -33,4 +33,15 @@ public class Recipe {
 
     private List<Long> likes = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return '\n' +
+        "title: " + title + '\n' +
+                "user: " + user +
+                '\n' +
+                "image: " + image + '\n' +
+                "description: " + description + '\n' +
+                "vegetarian: " + vegetarian
+                ;
+    }
 }
