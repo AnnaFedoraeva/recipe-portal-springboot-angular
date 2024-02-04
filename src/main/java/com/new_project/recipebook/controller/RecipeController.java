@@ -44,7 +44,7 @@ public class RecipeController {
     @PutMapping ("/{recipeId}")
     public ResponseEntity<?> updateRecipe (@PathVariable Long recipeId, @RequestBody Recipe recipe) throws Exception{
         Recipe updatedRecipe = recipeService.updateRecipe(recipe, recipeId);
-        return new ResponseEntity<>("The recipe with id " + recipeId + " has been successfully updated. Updated recipe: " + updatedRecipe, HttpStatus.OK);
+        return new ResponseEntity<>( "The recipe with id " + recipeId + " has been successfully updated. Updated recipe: " + updatedRecipe, HttpStatus.OK);
     }
 
     @PutMapping("/{recipeId}/user/{userId}")
