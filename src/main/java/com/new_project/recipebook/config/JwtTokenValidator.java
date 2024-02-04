@@ -24,7 +24,7 @@ import java.security.Key;
 public class JwtTokenValidator extends OncePerRequestFilter {
 
 
-    SecretKey key = Keys.hmacShaKeyFor(JwtConstant.JWT_SECRET.getBytes());
+   // SecretKey key = Keys.hmacShaKeyFor(JwtConstant.JWT_SECRET.getBytes());
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt = request.getHeader(JwtConstant.JWT_HEADER);
@@ -32,14 +32,18 @@ public class JwtTokenValidator extends OncePerRequestFilter {
             jwt=jwt.substring(7);
             try {
                 SecretKey key = Keys.hmacShaKeyFor(JwtConstant.JWT_SECRET.getBytes());
-                Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJwt(jwt).getBody();
 
-                String email = String.valueOf(claims.get(claims.get("email")));
+                Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+
+                String email = String.valueOf(claims.get("email"));
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, null);
+
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            }catch (Exception e) {
-                throw new BadCredentialsException("invalid token...");
+            } catch (ExpiredJwtException e) {
+                throw new BadCredentialsException("Expired token: " + jwt, e);
+            } catch (MalformedJwtException | SignatureException | UnsupportedJwtException | IllegalArgumentException e) {
+                throw new BadCredentialsException("Invalid token: " + jwt, e);
             }
         }
 

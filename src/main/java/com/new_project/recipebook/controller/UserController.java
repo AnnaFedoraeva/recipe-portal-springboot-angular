@@ -2,6 +2,7 @@ package com.new_project.recipebook.controller;
 
 import com.new_project.recipebook.model.User;
 import com.new_project.recipebook.repository.UserRepository;
+import com.new_project.recipebook.service.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,40 +16,57 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
-    @PostMapping("/users")
-    public ResponseEntity<?> createUser(@RequestBody @NotNull User user) {
+    @GetMapping("api/users/profile")
+    public User findUserByJwt(@RequestHeader("Authorization") String jwt) throws Exception {
 
-        if (userRepository.existsByEmail(user.getEmail())) {
-            return new ResponseEntity<>("Email " + user.getEmail() + " is already used", HttpStatus.OK);
-        } else {
-            User savedUser = userRepository.save(user);
-            return new ResponseEntity<>("The user " + savedUser + " has been successfully saved", HttpStatus.OK);
-        }
+        User user = userService.findUserByJwt(jwt);
+
+        return user;
+
     }
-
-    @DeleteMapping("/users/{userId}")
-    public ResponseEntity<?> deleteUser(@PathVariable @NotNull Long userId) {
-        Optional<User> userToDelete = userRepository.findById(userId);
-        if (userRepository.existsById(userId)) {
-            userRepository.deleteById(userId);
-            return new ResponseEntity<>("The user " + userToDelete + " has been deleted successfully.", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("The user " + userToDelete  + " does not exist", HttpStatus.OK);
-        }
-    }
-
-    @GetMapping("/users")
-    public List<User> getAllUsers (){
-        List <User> users = userRepository.findAll();
-        return users;
-    }
-
-
-
-
 }
+
+//
+//    @Autowired
+//    private UserRepository userRepository;
+//
+//    @PostMapping("/users")
+//    public ResponseEntity<?> createUser(@RequestBody @NotNull User user) {
+//
+//        if (userRepository.existsByEmail(user.getEmail())) {
+//            return new ResponseEntity<>("Email " + user.getEmail() + " is already used", HttpStatus.OK);
+//        } else {
+//            User savedUser = userRepository.save(user);
+//            return new ResponseEntity<>("The user " + savedUser + " has been successfully saved", HttpStatus.OK);
+//        }
+//    }
+//
+//    @DeleteMapping("/users/{userId}")
+//    public ResponseEntity<?> deleteUser(@PathVariable @NotNull Long userId) {
+//        Optional<User> userToDelete = userRepository.findById(userId);
+//        if (userRepository.existsById(userId)) {
+//            userRepository.deleteById(userId);
+//            return new ResponseEntity<>("The user " + userToDelete + " has been deleted successfully.", HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>("The user " + userToDelete  + " does not exist", HttpStatus.OK);
+//        }
+//    }
+//
+//    @GetMapping("/users")
+//    public List<User> getAllUsers (){
+//        List <User> users = userRepository.findAll();
+//        return users;
+//    }
+
+
+
+
+
+
+
+
 
 
 

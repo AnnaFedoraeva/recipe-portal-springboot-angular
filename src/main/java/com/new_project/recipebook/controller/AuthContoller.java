@@ -52,7 +52,7 @@ public class AuthContoller {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = jwtProvider. generateToken(authentication);
+        String token = jwtProvider.generateToken(authentication);
 
         AuthResponse response = new AuthResponse();
 
