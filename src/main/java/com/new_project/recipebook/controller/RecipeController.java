@@ -22,9 +22,9 @@ public class RecipeController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/user/{userId}")
-    public Recipe createRecipe(@RequestBody Recipe recipe, @PathVariable Long userId) throws Exception {
-        User user = userService.findUserById(userId);
+    @PostMapping()
+    public Recipe createRecipe(@RequestBody Recipe recipe, @RequestHeader("Authorization") String jwt) throws Exception {
+        User user = userService.findUserByJwt(jwt);
         return recipeService.createRecipe(recipe, user);
     }
 
@@ -35,8 +35,7 @@ public class RecipeController {
 
     //delete any recipe?
     @DeleteMapping("/{recipeId}")
-    public ResponseEntity<?> createRecipe(@PathVariable Long recipeId) throws Exception {
-       // User user = userService.findUserById(userId);
+    public ResponseEntity<?> deleteRecipe (@PathVariable Long recipeId) throws Exception {
         recipeService.deleteRecipe(recipeId);
         return new ResponseEntity<>("The recipe with id " + recipeId + " has been successfully deleted", HttpStatus.OK);
     }
@@ -47,11 +46,11 @@ public class RecipeController {
         return new ResponseEntity<>( "The recipe with id " + recipeId + " has been successfully updated. Updated recipe: " + updatedRecipe, HttpStatus.OK);
     }
 
-    @PutMapping("/{recipeId}/user/{userId}")
-    public ResponseEntity<?> likeRecipe (@PathVariable Long recipeId, @PathVariable Long userId) throws  Exception{
-        User user = userService.findUserById(userId);
+    @PutMapping("/{recipeId}/like")
+    public ResponseEntity<?> likeRecipe (@PathVariable Long recipeId, @RequestHeader("Authorization") String jwt) throws  Exception{
+        User user = userService.findUserByJwt(jwt);
         Recipe likedRecipe = recipeService.likeRecipe(recipeId, user);
-        return new ResponseEntity<>("The recipe with id " + recipeId + " is liked/unliked. ", HttpStatus.OK);
+        return new ResponseEntity<>(likedRecipe, HttpStatus.OK);
     }
 
 
