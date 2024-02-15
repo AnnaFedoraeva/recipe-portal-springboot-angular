@@ -1,0 +1,37 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <img mat-card-avatar
+            src="https://images.freeimages.com/365/images/previews/890/daisy-and-beautiful-laptop-vector-5111.jpg?fmt=webp&w=500"
+            alt="">
+        <mat-card-title>Anna</mat-card-title>
+        <mat-card-subtitle>Anna</mat-card-subtitle>
+    </mat-card-header>
+    <img class="max-h-[400px] object-cover" mat-card-image
+        src="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600"
+        alt="Photo of pancakes">
+    <mat-card-content>
+        <p>
+            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+            bred for hunting.
+        </p>
+    </mat-card-content>
+    <mat-card-actions class="flex justify-between">
+        <div>
+            <button mat-icon-button aria-label="Example icon button with a home icon">
+                <mat-icon>favorite</mat-icon>
+              </button>
+              <button  (click)="handleOpenEditRecipeForm()" mat-icon-button aria-label="Example icon button with a home icon">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button aria-label="Example icon button with a home icon">
+                <mat-icon>share</mat-icon>
+              </button>
+        </div>
+        <div>
+            <button mat-icon-button aria-label="Example icon button with a home icon">
+                <mat-icon>delete</mat-icon>
+              </button>
+        </div>
+    </mat-card-actions>
+</mat-card>
